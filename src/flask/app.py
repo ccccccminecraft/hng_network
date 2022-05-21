@@ -22,6 +22,11 @@ def days():
 def ark():
     return "まだないよ"
 
-# ローカル実行用
 if __name__ == '__main__':
+    # 今のところは適宜コメントアウトして運用
+    # ローカル実行時
     app.run(host="0.0.0.0", debug=True)
+    
+    # サーバー実行時
+    # app.run(host="0.0.0.0")
+    
