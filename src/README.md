@@ -8,8 +8,9 @@ minecraftのサーバーを監視して、ステータスをreturnします
 docker
 docker-compose
 は入れておいてくだしあ
+(一応一番下に導入方法は書きました)
 
-## 初回ビルド
+## 初回のみ dockerのビルド
 
 /src ディレクトリで
 docker-compose build --no-cache
@@ -17,6 +18,7 @@ docker-compose build --no-cache
 
 ## 環境立ち上げ
 
+/src ディレクトリで
 ```shell
 docker-compose up -d
 ```
@@ -45,3 +47,33 @@ https://localhost:5000/{エンドポイント}
 オーナーは
 Windows10 + Ubuntu(WSL2)
 環境で開発してます
+
+## docker install方法
+
+(自分の環境) docker インストール
+で検索したほうがはやい
+
+windows10 + WSL2の環境 or Ubuntu
+
+aptで入ったっけ？
+
+``` shell
+sudo apt update
+sudo apt install docker-ce
+sudo apt install docker-compose
+```
+
+dockerを起動
+
+WSL2の場合(systemctlがなんか動かないので)
+
+```shell
+service docker start
+```
+
+linux
+
+```shell
+systemctl enable docker
+systemctl start docker
+```
