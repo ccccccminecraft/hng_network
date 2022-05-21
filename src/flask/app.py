@@ -1,5 +1,7 @@
 from flask import Flask
-from MinecraftServerChecker import MinecraftServerChecker
+import json
+from RedisController import RedisController
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -8,9 +10,9 @@ def index():
 
 @app.route("/minecraft")
 def minecraft():
-    checker = MinecraftServerChecker()
-    ret = checker.run()
-    return ret
+    redis_controller = RedisController()
+    mc_servers = json.dumps(redis_controller.get_game_server_status("minecraft"))
+    return mc_servers
 
 @app.route("/days")
 def days():
@@ -20,5 +22,6 @@ def days():
 def ark():
     return "まだないよ"
 
+# ローカル実行用
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
