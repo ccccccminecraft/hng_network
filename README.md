@@ -36,7 +36,7 @@ docker exec -it src_flask_1 bash
 2. flaskを起動する
 
 ```shell
-pytho3 app.py
+python3 app.py
 ```
 
 ## apiアクセス
@@ -54,6 +54,11 @@ Windows10 + Ubuntu(WSL2)
 
 (自分の環境) docker インストール
 で検索したほうがはやい
+
+1. [ここ](https://docs.docker.com/desktop/windows/install/)からDocker Desktop for WindowsでDL。
+2. インストーラーを起動
+3. [Docker hub](https://hub.docker.com/)でアカウントを作成
+4. Accept画面が後ろで開かれていたらそちらにてAcceptを押す。（タコみたいなのがいる画面）
 
 windows10 + WSL2の環境 or Ubuntu
 
