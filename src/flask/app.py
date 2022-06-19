@@ -16,8 +16,17 @@ def index():
 @app.route("/minecraft")
 def minecraft():
     redis_controller = RedisController()
-    mc_servers = json.dumps(redis_controller.get_game_server_status("minecraft"))
-    return mc_servers
+    res = redis_controller.get_game_server_status("minecraft")
+    ret = []
+    for server in res:
+        ret.append({
+            "server_name": server["server_name"],
+            "game": server["game"],
+            "global_address": server["global_address"],
+            "players": server["players"],
+            "ping": server["ping"],
+        })
+    return json.dumps(ret)
 
 if __name__ == '__main__':
     # 今のところは適宜コメントアウトして運用
