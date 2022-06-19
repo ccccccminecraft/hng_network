@@ -9,5 +9,5 @@ data = {
     "ping": ""
 }
 
-register = ServerRegister
+register = ServerRegister()
 register.regist_server(data)
