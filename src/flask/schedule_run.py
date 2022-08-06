@@ -9,7 +9,7 @@ def task():
     mc_checker.run()
 
 
-schedule.every(1).seconds.do(task)
+schedule.every(60).seconds.do(task)
 while True:
     schedule.run_pending()
     sleep(1)
