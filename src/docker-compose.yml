@@ -5,9 +5,13 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        environment:
+            HNG_SSL_ENABLED: ${HNG_SSL_ENABLED:-false}
+            HNG_PORT: ${HNG_PORT:-5000}
+            HNG_SSL_CERT_PATH: ${HNG_SSL_CERT_PATH:-./.pem/cert.pem}
+            HNG_SSL_KEY_PATH: ${HNG_SSL_KEY_PATH:-./.pem/server_secret.key}
         ports:
-            - "80:80"
-            - "443:443"
+            - "${HNG_PORT:-5000}:${HNG_PORT:-5000}"
         volumes:
             - "./flask:/usr/src/app"
         tty: true
