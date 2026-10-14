@@ -15,7 +15,9 @@ docker-compose
 ## 初回のみ dockerのビルド
 
 /src ディレクトリで
+```shell
 docker-compose build --no-cache
+```
 を実行
 
 ## 環境立ち上げ
@@ -39,10 +41,24 @@ docker exec -it src_flask_1 bash
 python3 app.py
 ```
 
-## apiアクセス
+ローカル開発では SSL を設定しなくても HTTP で起動できます。API は次の URL からアクセスします。
 
-https://localhost:5000/{エンドポイント}
-で行けるはず
+```text
+http://localhost:5000/{エンドポイント}
+```
+
+## サーバーで HTTPS を有効にする
+
+`src/.env` を作成し、サーバー上の証明書と秘密鍵のパスを設定します。パスは Flask コンテナ内から見える場所を指定してください。証明書ファイルは `src/flask/.pem/` に置く構成なら、以下を使えます。
+
+```dotenv
+HNG_SSL_ENABLED=true
+HNG_PORT=443
+HNG_SSL_CERT_PATH=./.pem/cert.pem
+HNG_SSL_KEY_PATH=./.pem/server_secret.key
+```
+
+この設定で `docker-compose up -d` を実行すると HTTPS で起動し、API は `https://<サーバーのホスト名>/{エンドポイント}` からアクセスできます。SSL を使わない場合は `HNG_SSL_ENABLED=false`（既定値）にし、`HNG_PORT` は省略するか `5000` にしてください。
 
 ## メモ
 

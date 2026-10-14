@@ -1,12 +1,11 @@
 from flask import Flask
 from flask_cors import CORS
 import json
+import os
 import ssl
 from RedisController import RedisController
 
 app = Flask(__name__)
-context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-context.load_cert_chain('./.pem/cert.pem', './.pem/server_secret.key')
 FILE_NAME = ""
 CORS(
     app,
@@ -43,10 +42,16 @@ def minecraft():
 
 
 if __name__ == '__main__':
-    # 今のところは適宜コメントアウトして運用
-    # ローカル実行時
-    # app.run(host="0.0.0.0", debug=True)
+    ssl_enabled = os.getenv("HNG_SSL_ENABLED", "false").strip().lower() in {
+        "1", "true", "yes", "on"
+    }
+    ssl_context = None
+    if ssl_enabled:
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        cert_path = os.getenv("HNG_SSL_CERT_PATH", "./.pem/cert.pem")
+        key_path = os.getenv("HNG_SSL_KEY_PATH", "./.pem/server_secret.key")
+        ssl_context.load_cert_chain(cert_path, key_path)
 
-    # サーバー実行時
-    # app.run(host="0.0.0.0", port=80)
-    app.run(host="0.0.0.0", ssl_context=context, port=443)
+    default_port = "443" if ssl_enabled else "5000"
+    port = int(os.getenv("HNG_PORT", default_port))
+    app.run(host="0.0.0.0", port=port, ssl_context=ssl_context)
